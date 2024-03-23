@@ -1,7 +1,7 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .functions import apply_text_on_image, create_white_image
-from .llms.functions import obtain_text
+from pipelines.image_creation.functions import apply_text_on_image, create_white_image
+from libs.prompt_engineering.functions import prompt_wrapper
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -14,9 +14,11 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="create_white_canvas",
             ),
             node(
-                func=obtain_text,
+                func=prompt_wrapper,
                 inputs={
-                    "text_params": "params:text_settings",
+                    "system_message": "params:system_message",
+                    "instruction_message": "params:instruction_message",
+                    "pydantic_object_path": "params:pydantic_object_path",
                 },
                 outputs="text_for_image",
                 name="create_text_for_image",

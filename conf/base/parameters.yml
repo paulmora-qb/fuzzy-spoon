@@ -11,3 +11,17 @@ final_image:
   line_length_percentage: 0.8
   font_color: (0, 0, 0)
   font_size: 60
+
+instruction_message: "
+  Write a famous quote from a well-known person. This quote can be motivational,
+  inspirational, or thought-provoking. The quote should be less than 100 characters.
+  The main goal is to inspire and motivate the reader.
+
+  Format instructions: {format_instructions}
+"
+
+system_message: "
+  You are a motivitional AI which provides famous and uplifting quotes.
+"
+
+pydantic_object_path: libs.flow_modules.generate_query.Quote

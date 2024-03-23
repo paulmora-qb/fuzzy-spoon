@@ -6,12 +6,12 @@ from langchain.prompts.chat import HumanMessagePromptTemplate
 class InstructionMessages(Enum):
     """Collection of templates for the instruction prompt."""
 
-    quote_message = HumanMessagePromptTemplate.from_template(
+    instruction_message = HumanMessagePromptTemplate.from_template(
         """
         Write a famous quote from a well-known person. This quote can be motivational, inspirational, or thought-provoking.
         The quote should be less than 100 characters. The main goal is to inspire and motivate the reader.
 
-        topic: {topic}
+        Format instructions: {format_instructions}
         """
     )
 
@@ -19,6 +19,6 @@ class InstructionMessages(Enum):
         """
         Suggest a hashtag for the quote.
 
-        quote: {quote}
+        Format instructions: {format_instructions}
         """
     )

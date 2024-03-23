@@ -1,7 +1,6 @@
 import ast
 
 import numpy as np
-import openai
 from PIL import Image, ImageDraw, ImageFont
 from kedro.config import OmegaConfigLoader  # noqa: E402
 
