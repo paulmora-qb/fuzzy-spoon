@@ -13,9 +13,9 @@ import importlib
 
 
 def prompt_wrapper(
-    system_message: SystemMessagePromptTemplate = "",
-    instruction_message: HumanMessagePromptTemplate = "",
-    pydantic_object_path="",
+    system_message: str = "",
+    instruction_message: str = "",
+    pydantic_object_path: str = "",
 ) -> str:
 
     prompt = _build_prompt(

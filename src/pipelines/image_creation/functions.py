@@ -2,7 +2,6 @@ import ast
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
-from kedro.config import OmegaConfigLoader  # noqa: E402
 
 
 def create_white_image(params: dict[str]) -> Image:
@@ -53,8 +52,12 @@ def apply_text_on_image(image: Image, text: str, params: dict[str]) -> Image:
         font_size=font_size,
     )
 
+    quote_text = text.quote
+
     # Calculate the total height of the text.
-    adjusted_text = _introduce_line_breaks(text=text, max_line_length=max_line_length)
+    adjusted_text = _introduce_line_breaks(
+        text=quote_text, max_line_length=max_line_length
+    )
     total_text_height = sum(
         [draw.textsize(line, font=font)[1] for line in adjusted_text]
     )
