@@ -20,4 +20,5 @@ def register_pipelines() -> Dict[str, Pipeline]:
     return {
         "image_creation": image_create_pipeline(),
         "insta_publish": insta_create_pipeline(),
+        "__default__": image_create_pipeline() + insta_create_pipeline(),
     }

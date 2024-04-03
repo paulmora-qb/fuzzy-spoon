@@ -3,7 +3,6 @@
 from PIL import Image
 from instagrapi import Client
 import os
-from kedro.config import OmegaConfigLoader
 from libs.prompt_engineering.functions import prompt_wrapper
 
 
@@ -47,13 +46,9 @@ def post_image(image: Image, hashtags: list[str]) -> None:
         image (Image): The image to be posted.
         hashtags (list[str]): The hashtags to be included in the Instagram post.
     """
-    # Load the Instagram credentials.
-    conf_loader = OmegaConfigLoader(conf_source="./conf")
-    insta_params = conf_loader["credentials"]["insta_login_params"]
-
     # Extract the Instagram credentials.
-    username = insta_params["username"]
-    password = insta_params["password"]
+    username = os.environ.get("INSTA_USERNAME")
+    password = os.environ.get("INSTA_PASSWORD")
 
     # Login to the Instagram account.
     cl = Client()

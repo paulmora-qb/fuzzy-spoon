@@ -1,10 +1,10 @@
 """Functions for the llm callback pipeline."""
 
-from kedro.config import OmegaConfigLoader
 from langchain.prompts.chat import (
     HumanMessagePromptTemplate,
     SystemMessagePromptTemplate,
 )
+import os
 from typing import Any
 from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import ChatPromptTemplate
@@ -58,13 +58,9 @@ def _get_openai_endpoint(
         ChatOpenAI: OpenAI endpoint.
     """
 
-    # Load the OpenAI credentials.
-    conf_loader = OmegaConfigLoader(conf_source="./conf")
-    openai_params = conf_loader["credentials"]["openai_settings"]
-
     # Extract the OpenAI credentials.
-    openai_api_base = openai_params["openai_base_url"]
-    openai_api_key = openai_params["openai_api_key"]
+    openai_api_base = os.environ.get("OPENAI_BASE_URL")
+    openai_api_key = os.environ.get("OPENAI_API_KEY")
 
     return ChatOpenAI(
         temperature=temperature,
