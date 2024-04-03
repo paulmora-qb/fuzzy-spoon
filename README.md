@@ -1,47 +1,50 @@
-# New Kedro Project
+# Automated Instgram Content
 
 ## Overview
 
-This is your new Kedro project, which was generated using `kedro 0.19.3`.
+This repository creates images which are afterwards posted to an instagram account.
+Basically what happens is that text is created and applied on an image. Afterwards
+some fitting hashtags are created on basis of that text, those are then used
+as the caption.
 
-Take a look at the [Kedro documentation](https://docs.kedro.org) to get started.
+The text that is applied on the images and the hashtags are created using a LLM.
 
-## Rules and guidelines
+## Example Image
 
-In order to get the best out of the template:
+One example of such an image would be the following. The text was created through a LLM
+and the text and the author are then applied on the white canvas.
 
-* Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a [data engineering convention](https://docs.kedro.org/en/stable/faq/faq.html#what-is-data-engineering-convention)
-* Don't commit data to your repository
-* Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
+<img src="./images/post.png" alt="Hashtags" width="600">
 
-## How to install dependencies
+Afterwards the text and author name are fed again into the LLM to generate trending
+hashtags that are relevant to that post.
 
-Declare any dependencies in `requirements.txt` for `pip` installation.
+<img src="./images/hashtags.png" alt="Hashtags" width="600">
 
-To install them, run:
+The LLM is also fed the information of what posts the LLM has already created in the
+past. That helps to avoid creating text and therefore images which were already
+created in the past.
+
+## How to run the codebase
+
+To run the codebase one would need as the first step install all relevant requirements,
+stated in the `requirements.txt`.
+
+The repository is using kedro pipelines for the orchestration of the python code. There
+are currently two pipelines:
+
+1. Building the image; creating the text for the image and apply the text onto the
+   image. This pipeline can be triggered through
 
 ```
-pip install -r requirements.txt
+kedro run --pipeline image_creation
+
+
+2. Creating the hashtags and posting the image onto instagram. This pipeline can be
+triggered through
 ```
 
-## How to run your Kedro pipeline
-
-You can run your Kedro project with:
-
-```
-kedro run
-```
-
-## How to test your Kedro project
-
-Have a look at the files `src/tests/test_run.py` and `src/tests/pipelines/test_data_science.py` for instructions on how to write your tests. Run the tests as follows:
-
-```
-pytest
-```
-
-To configure the coverage threshold, look at the `.coveragerc` file.
+kedro run --pipeline insta_publish
 
 ## Project dependencies
 
@@ -56,43 +59,61 @@ To see and update the dependency requirements for your project use `requirements
 > Jupyter, JupyterLab, and IPython are already included in the project requirements by default, so once you have run `pip install -r requirements.txt` you will not need to take any extra steps before you use them.
 
 ### Jupyter
+
 To use Jupyter notebooks in your Kedro project, you need to install Jupyter:
 
 ```
+
 pip install jupyter
+
 ```
 
 After installing Jupyter, you can start a local notebook server:
 
 ```
+
 kedro jupyter notebook
+
 ```
 
 ### JupyterLab
+
 To use JupyterLab, you need to install it:
 
 ```
+
 pip install jupyterlab
+
 ```
 
 You can also start JupyterLab:
 
 ```
+
 kedro jupyter lab
+
 ```
 
 ### IPython
+
 And if you want to run an IPython session:
 
 ```
+
 kedro ipython
+
 ```
 
 ### How to ignore notebook output cells in `git`
+
 To automatically strip out all output cell contents before committing to `git`, you can use tools like [`nbstripout`](https://github.com/kynan/nbstripout). For example, you can add a hook in `.git/config` with `nbstripout --install`. This will run `nbstripout` before anything is committed to `git`.
 
-> *Note:* Your output cells will be retained locally.
+> _Note:_ Your output cells will be retained locally.
 
 ## Package your Kedro project
 
 [Further information about building project documentation and packaging your project](https://docs.kedro.org/en/stable/tutorial/package_a_project.html)
+
+```
+
+```
