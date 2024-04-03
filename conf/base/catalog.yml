@@ -1,14 +1,20 @@
 white_canvas:
   type: pickle.PickleDataset
-  filepath: data/02_intermediate/white_canvas.png
-  versioned: true
+  filepath: data/02_intermediate/white_canvas.pkl
+
+past_texts:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/past_texts.pkl
+
+adjusted_past_texts:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/past_texts.pkl
 
 text_for_image:
   type: pickle.PickleDataset
-  filepath: data/02_intermediate/text_for_image.png
-  versioned: true
+  filepath: data/02_intermediate/text_for_image.pkl
 
 final_image:
   type: pickle.PickleDataset
-  filepath: data/02_intermediate/final_image.png
+  filepath: data/02_intermediate/final_image.pkl
   versioned: true

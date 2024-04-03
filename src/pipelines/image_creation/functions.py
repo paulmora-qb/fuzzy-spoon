@@ -2,13 +2,64 @@ import ast
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+from libs.prompt_engineering.functions import prompt_wrapper
+
+
+def save_pasts_text(
+    text: str,
+    past_texts: list[str] = [""],
+) -> list[str]:
+    """Function to save the past texts.
+
+    Args:
+        text (str): Text to be saved.
+        past_texts (list[str]): List of past texts.
+
+    Returns:
+        list[str]: List of past texts.
+    """
+    if text in past_texts:
+        return past_texts
+    else:
+        return past_texts + [text]
+
+
+def create_text_for_image(
+    system_message: str,
+    instruction_message: str,
+    pydantic_object_path: str,
+    past_texts: list[str] = [""],
+) -> str:
+    """Function to create the text that will be placed on the image.
+
+    Args:
+        system_message (str): System message which states how the AI should behave.
+        instruction_message (str): Instruction message which states what the AI should
+            do.
+        pydantic_object_path (str): Path of where the pydantic object is stored. This
+            object states what attributes the output class should have.
+        past_texts (list[str]): List of past texts.
+
+    Returns:
+        str: The output of the pipeline. This oftentimes is a class which has different
+            attributes.
+    """
+    adjusted_instruction_message = instruction_message.format(
+        past_texts=str(past_texts), format_instructions="{format_instructions}"
+    )
+    return prompt_wrapper(
+        system_message=system_message,
+        instruction_message=adjusted_instruction_message,
+        pydantic_object_path=pydantic_object_path,
+    )
 
 
 def create_white_image(params: dict[str]) -> Image:
     """Function to create a white canvas.
 
     Args:
-        params (dict[str]): Contains the information about background color, image length and width.
+        params (dict[str]): Contains the information about background color, image
+            length and width.
 
     Returns:
         Image: Background image.
@@ -37,56 +88,65 @@ def apply_text_on_image(image: Image, text: str, params: dict[str]) -> Image:
         Image: The inputted image with the text placed in the middle of the file.
     """
     font_color = ast.literal_eval(params["font_color"])
-    font_file_path = params["font_location"]
-    font_size = params["font_size"]
+    quote_font_file_path = params["quote_font_location"]
+    author_font_file_path = params["author_font_location"]
+    quote_font_size = params["quote_font_size"]
+    author_font_size = params["author_font_size"]
     margin_percentage = params["margin_percentage"]
 
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype(font_file_path, font_size)
+    quote_font = ImageFont.truetype(quote_font_file_path, quote_font_size)
+    author_font = ImageFont.truetype(author_font_file_path, author_font_size)
 
     # Calculate the maximum line length.
     max_line_length = _calculate_max_line_length(
         image_width=image.width,
         margin_percentage=margin_percentage,
-        font=font,
-        font_size=font_size,
+        font=quote_font,
     )
 
+    # Separate texts
     quote_text = text.quote
+    author_text = text.author
 
     # Calculate the total height of the text.
     adjusted_text = _introduce_line_breaks(
         text=quote_text, max_line_length=max_line_length
     )
-    total_text_height = sum(
-        [draw.textsize(line, font=font)[1] for line in adjusted_text]
-    )
+    adjusted_text += [" "]
+
+    total_text_height = (
+        draw.textsize(adjusted_text[0], font=quote_font)[1] * len(adjusted_text)
+    ) + draw.textsize(author_text, font=author_font)[1]
+
+    text_font_dict = {i: quote_font for i in adjusted_text}
+    text_font_dict[text.author] = author_font
 
     # Calculate the starting y-coordinate to center the text vertically
     y_start = (image.height - total_text_height) // 2
 
     # Draw each line of text
-    for line in adjusted_text:
-        text_width, text_height = draw.textsize(line, font=font)
+    for text, font in text_font_dict.items():
+        text_width, text_height = draw.textsize(text, font=font)
         x = (image.width - text_width) // 2
-        draw.text((x, y_start), line, font=font, fill=font_color)
+        draw.text((x, y_start), text, font=font, fill=font_color)
         y_start += text_height  # Move down for the next line
 
     return image
 
 
 def _calculate_max_line_length(
-    image_width: int, margin_percentage: float, font, font_size: int
+    image_width: int, margin_percentage: float, font: ImageFont.FreeTypeFont
 ) -> int:
-    """_summary_
+    """This function calculates the maximum line length that can fit in the image.
 
     Args:
-        image_width (float): _description_
-        left_margin (float): _description_
-        right_margin (float): _description_
+        image_width (int): Width of the image.
+        margin_percentage (float): Percentage of the margin.
+        font (ImageFont.FreeTypeFont): Font used for the text.
 
     Returns:
-        int: _description_
+        int: Maximum line length.
     """
     usable_width = image_width * (1 - (margin_percentage * 2))
 
