@@ -105,34 +105,51 @@ def apply_text_on_image(image: Image, text: str, params: dict[str]) -> Image:
         font=quote_font,
     )
 
-    # Separate texts
+    # Separate texts.
     quote_text = text.quote
     author_text = text.author
 
-    # Calculate the total height of the text.
+    # Introduce line breaks in the quote text.
     adjusted_text = _introduce_line_breaks(
         text=quote_text, max_line_length=max_line_length
     )
     adjusted_text += [" "]
 
-    total_text_height = (
-        draw.textsize(adjusted_text[0], font=quote_font)[1] * len(adjusted_text)
-    ) + draw.textsize(author_text, font=author_font)[1]
+    # Calculate the total height of the text.
+    _, quote_text_height = _textsize(adjusted_text[0], font=quote_font)
+    _, author_text_height = _textsize(author_text, font=author_font)
+    total_text_height = (quote_text_height * len(adjusted_text)) + author_text_height
 
     text_font_dict = {i: quote_font for i in adjusted_text}
     text_font_dict[text.author] = author_font
 
-    # Calculate the starting y-coordinate to center the text vertically
+    # Calculate the starting y-coordinate to center the text vertically.
     y_start = (image.height - total_text_height) // 2
 
-    # Draw each line of text
+    # Draw each line of text.
     for text, font in text_font_dict.items():
-        text_width, text_height = draw.textsize(text, font=font)
+        _, _, text_width, text_height = draw.textbbox((0, 0), text=text, font=font)
         x = (image.width - text_width) // 2
         draw.text((x, y_start), text, font=font, fill=font_color)
         y_start += text_height  # Move down for the next line
 
     return image
+
+
+def _textsize(text: str, font: ImageFont.FreeTypeFont) -> tuple[int, int]:
+    """This function calculates the width and height of the text.
+
+    Args:
+        text (str): Text whose size needs to be calculated.
+        font (ImageFont.FreeTypeFont): Font used for the text.
+
+    Returns:
+        tuple[int, int]: Width and height of the text.
+    """
+    im = Image.new(mode="P", size=(0, 0))
+    draw = ImageDraw.Draw(im)
+    _, _, width, height = draw.textbbox((0, 0), text=text, font=font)
+    return width, height
 
 
 def _calculate_max_line_length(
@@ -149,10 +166,7 @@ def _calculate_max_line_length(
         int: Maximum line length.
     """
     usable_width = image_width * (1 - (margin_percentage * 2))
-
-    sample_character_width = ImageDraw.Draw(Image.new("RGB", (1, 1))).textsize(
-        "X", font=font
-    )[0]
+    sample_character_width, _ = _textsize("a", font=font)
     return usable_width // sample_character_width
 
 

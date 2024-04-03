@@ -1,7 +1,5 @@
 """Project pipelines."""
 
-from typing import Dict
-
 from pipelines.image_creation.pipeline import (
     create_pipeline as image_create_pipeline,
 )
@@ -11,7 +9,7 @@ from pipelines.insta_publish.pipeline import (
 from kedro.pipeline import Pipeline
 
 
-def register_pipelines() -> Dict[str, Pipeline]:
+def register_pipelines() -> dict[str, Pipeline]:
     """Register the project's pipelines.
 
     Returns:
