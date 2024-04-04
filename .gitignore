@@ -9,7 +9,7 @@ conf/local/**
 conf/**/*credentials*
 
 # except their sub-folders
-
+data
 !data/**/
 !logs/**/
 
