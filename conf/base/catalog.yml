@@ -1,29 +1,29 @@
-white_canvas:
+"{variant}.white_canvas":
   type: pickle.PickleDataset
-  filepath: data/02_intermediate/white_canvas.pkl
+  filepath: data/02_intermediate/{variant}/white_canvas.pkl
 
-past_texts:
+"{variant}.past_texts":
   type: pandas.ExcelDataset
-  filepath: data/02_intermediate/past_generations.xlsx
+  filepath: data/02_intermediate/{variant}/past_generations.xlsx
 
-adjusted_past_texts:
+"{variant}.adjusted_past_texts":
   type: pandas.ExcelDataset
-  filepath: data/02_intermediate/past_generations.xlsx
+  filepath: data/02_intermediate/{variant}/past_generations.xlsx
 
-text_for_image:
+"{variant}.text_for_image":
   type: pickle.PickleDataset
-  filepath: data/02_intermediate/text_for_image.pkl
+  filepath: data/02_intermediate/{variant}/text_for_image.pkl
 
-quote_font:
+"{variant}.quote_font":
   type: datasets.font_dataset.FontDataset
   filepath: data/01_raw/fonts/quote_font.ttf
   fontsize: 60
 
-author_font:
+"{variant}.author_font":
   type: datasets.font_dataset.FontDataset
-  filepath: data/01_raw/fonts/author_font.ttf
+  filepath: data/01_raw/fonts/{variant}/author_font.ttf
   fontsize: 40
 
-final_image:
+"{variant}.final_image":
   type: pickle.PickleDataset
-  filepath: data/02_intermediate/final_image.pkl
+  filepath: data/02_intermediate/{variant}/final_image.pkl

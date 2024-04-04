@@ -1,49 +1,88 @@
 # Image creation #######################################################################
-
-canvas_settings:
+_default_canvas_settings:
   image_width: 1080
   image_length: 1080
   background_color: 255
 
-text_settings:
-
-final_image:
+_default_final_image:
   margin_percentage: 0.1
   line_length_percentage: 0.8
   font_color: (0, 0, 0)
 
 # Motivational Quote ###################################################################
+quotes:
+  # Default settings
+  canvas_settings: ${_default_canvas_settings}
+  final_image: ${_default_final_image}
 
-# Motivational Quote
-instruction_message: "
-  Write a famous quote from a well-known person. This quote can be motivational,
-  inspirational, or thought-provoking. The quote should be less than 100 characters.
-  The main goal is to inspire and motivate the reader. Be careful not to generate a
-  quote that is already present in the list of texts that were already used.
+  # Motivational Quote
+  instruction_message: "
+    Write a famous quote from a well-known person. This quote can be motivational,
+    inspirational, or thought-provoking. The quote should be less than 100 characters.
+    The main goal is to inspire and motivate the reader. Be careful not to generate a
+    quote that is already present in the list of texts that were already used.
 
-  Text Already Used: {past_texts}
-  Format instructions: {format_instructions}
-"
+    Text Already Used: {past_texts}
+    Format instructions: {format_instructions}
+  "
 
-system_message: "
-  You are a motivitional AI which provides famous and uplifting quotes.
-"
+  system_message: "
+    You are a motivitional AI which provides famous and uplifting quotes.
+  "
 
-pydantic_object_path: libs.flow_modules.generate_query.Quote
+  pydantic_object_path: libs.flow_modules.generate_query.Quote
 
-# Motivational Quote Hashtags
-hashtag_instruction_message: "
-  Find around 10 hashtags relevant for the following text:
+  # Motivational Quote Hashtags
+  hashtag_instruction_message: "
+    Find around 10 hashtags relevant for the following text:
 
-  Text for hashtags: {text}
-  Format instructions: {format_instructions}
-"
+    Text for hashtags: {text}
+    Format instructions: {format_instructions}
+  "
 
-hashtag_system_message: "
-  You are a helpful AI which looks for trending hashtags for a given input.
-  The main goal is to help the user find the best hashtags for their post. The hashtags
-  should help the post reach a wider audience.
-"
+  hashtag_system_message: "
+    You are a helpful AI which looks for trending hashtags for a given input.
+    The main goal is to help the user find the best hashtags for their post. The hashtags
+    should help the post reach a wider audience.
+  "
 
-hashtag_pydantic_object_path: libs.flow_modules.generate_query.Hashtag
+  hashtag_pydantic_object_path: libs.flow_modules.generate_query.Hashtag
 
+# Quiz Quote ###########################################################################
+quiz:
+  # Default settings
+  canvas_settings: ${_default_canvas_settings}
+  final_image: ${_default_final_image}
+
+  # Quiz Message
+  instruction_message: "
+    Write a famous quote from a well-known person. This quote can be motivational,
+    inspirational, or thought-provoking. The quote should be less than 100 characters.
+    The main goal is to inspire and motivate the reader. Be careful not to generate a
+    quote that is already present in the list of texts that were already used.
+
+    Text Already Used: {past_texts}
+    Format instructions: {format_instructions}
+  "
+
+  system_message: "
+    You are a motivitional AI which provides famous and uplifting quotes.
+  "
+
+  pydantic_object_path: libs.flow_modules.generate_query.Quote
+
+  # Quiz Hashtags
+  hashtag_instruction_message: "
+    Find around 10 hashtags relevant for the following text:
+
+    Text for hashtags: {text}
+    Format instructions: {format_instructions}
+  "
+
+  hashtag_system_message: "
+    You are a helpful AI which looks for trending hashtags for a given input.
+    The main goal is to help the user find the best hashtags for their post. The hashtags
+    should help the post reach a wider audience.
+  "
+
+  hashtag_pydantic_object_path: libs.flow_modules.generate_query.Hashtag
