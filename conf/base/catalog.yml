@@ -4,11 +4,11 @@ white_canvas:
 
 past_texts:
   type: pickle.PickleDataset
-  filepath: data/02_intermediate/past_texts.pkl
+  filepath: data/02_intermediate/past_generations.pkl
 
 adjusted_past_texts:
   type: pickle.PickleDataset
-  filepath: data/02_intermediate/past_texts.pkl
+  filepath: data/02_intermediate/past_generations.pkl
 
 text_for_image:
   type: pickle.PickleDataset
