@@ -18,10 +18,11 @@ def save_pasts_text(
     Returns:
         list[str]: List of past texts.
     """
-    if text in past_texts:
+    string_text = str(text)
+    if string_text in past_texts:
         return past_texts
     else:
-        return past_texts + [text]
+        return past_texts + [string_text]
 
 
 def create_text_for_image(
