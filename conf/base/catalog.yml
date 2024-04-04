@@ -3,12 +3,12 @@ white_canvas:
   filepath: data/02_intermediate/white_canvas.pkl
 
 past_texts:
-  type: pickle.PickleDataset
-  filepath: data/02_intermediate/past_generations.pkl
+  type: pandas.ExcelDataset
+  filepath: data/02_intermediate/past_generations.xlsx
 
 adjusted_past_texts:
-  type: pickle.PickleDataset
-  filepath: data/02_intermediate/past_generations.pkl
+  type: pandas.ExcelDataset
+  filepath: data/02_intermediate/past_generations.xlsx
 
 text_for_image:
   type: pickle.PickleDataset
@@ -17,4 +17,3 @@ text_for_image:
 final_image:
   type: pickle.PickleDataset
   filepath: data/02_intermediate/final_image.pkl
-  versioned: true

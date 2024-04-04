@@ -3,33 +3,31 @@ import ast
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from libs.prompt_engineering.functions import prompt_wrapper
+import pandas as pd
 
 
 def save_pasts_text(
     text: str,
-    past_texts: list[str] = [""],
-) -> list[str]:
+    past_texts: pd.DataFrame,
+) -> pd.DataFrame:
     """Function to save the past texts.
 
     Args:
         text (str): Text to be saved.
-        past_texts (list[str]): List of past texts.
+        past_texts (pd.DataFrame): Dataframe containing author and text.
 
     Returns:
-        list[str]: List of past texts.
+        list[str]: DataFrame containing the old dataframe and the new appended.
     """
-    string_text = str(text)
-    if string_text in past_texts:
-        return past_texts
-    else:
-        return past_texts + [string_text]
+    data = pd.DataFrame({"text": {0: text.quote}, "author": {0: text.author}})
+    return pd.concat([past_texts, data])
 
 
 def create_text_for_image(
     system_message: str,
     instruction_message: str,
     pydantic_object_path: str,
-    past_texts: list[str] = [""],
+    past_texts: pd.DataFrame,
 ) -> str:
     """Function to create the text that will be placed on the image.
 
@@ -39,14 +37,15 @@ def create_text_for_image(
             do.
         pydantic_object_path (str): Path of where the pydantic object is stored. This
             object states what attributes the output class should have.
-        past_texts (list[str]): List of past texts.
+        past_texts (pd.DataFrame): Dataframe containing author and text.
 
     Returns:
         str: The output of the pipeline. This oftentimes is a class which has different
             attributes.
     """
+    list_of_past_texts = past_texts.loc[:, "text"].tolist()
     adjusted_instruction_message = instruction_message.format(
-        past_texts=str(past_texts), format_instructions="{format_instructions}"
+        past_texts=str(list_of_past_texts), format_instructions="{format_instructions}"
     )
     return prompt_wrapper(
         system_message=system_message,
