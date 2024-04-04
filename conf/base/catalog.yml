@@ -1,14 +1,14 @@
+"past_texts":
+  type: pandas.ExcelDataset
+  filepath: data/02_intermediate/past_generations.xlsx
+
+"adjusted_past_texts":
+  type: pandas.ExcelDataset
+  filepath: data/02_intermediate/past_generations.xlsx
+
 "{variant}.white_canvas":
   type: pickle.PickleDataset
   filepath: data/02_intermediate/{variant}/white_canvas.pkl
-
-"{variant}.past_texts":
-  type: pandas.ExcelDataset
-  filepath: data/02_intermediate/{variant}/past_generations.xlsx
-
-"{variant}.adjusted_past_texts":
-  type: pandas.ExcelDataset
-  filepath: data/02_intermediate/{variant}/past_generations.xlsx
 
 "{variant}.text_for_image":
   type: pickle.PickleDataset

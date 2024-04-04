@@ -11,7 +11,7 @@ from pipelines.image_creation.functions import (
 from pipelines.insta_publish import create_pipeline as create_insta_publish_pipeline
 
 
-def create_image_creation_pipeline(namespace: str) -> Pipeline:
+def create_image_creation_pipeline(inputs: str, namespace: str) -> Pipeline:
     nodes = [
         node(
             func=create_white_image,
@@ -52,7 +52,7 @@ def create_image_creation_pipeline(namespace: str) -> Pipeline:
             name="create_final_image",
         ),
     ]
-    return pipeline(pipe=Pipeline(nodes), namespace=namespace)
+    return pipeline(pipe=Pipeline(nodes), namespace=namespace, inputs=inputs)
 
 
 def create_pipeline(variants: list[str]) -> Pipeline:
@@ -65,7 +65,7 @@ def create_pipeline(variants: list[str]) -> Pipeline:
         Pipeline: Pipeline for quotes with author information.
     """
     return sum(
-        create_image_creation_pipeline(namespace=namespace)
+        create_image_creation_pipeline(namespace=namespace, inputs="past_texts")
         + create_insta_publish_pipeline(namespace=namespace)
         for namespace in variants
     )
