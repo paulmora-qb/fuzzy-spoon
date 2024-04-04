@@ -42,6 +42,8 @@ def create_pipeline(**kwargs) -> Pipeline:
                 inputs={
                     "image": "white_canvas",
                     "text": "text_for_image",
+                    "quote_font": "quote_font",
+                    "author_font": "author_font",
                     "params": "params:final_image",
                 },
                 outputs="final_image",

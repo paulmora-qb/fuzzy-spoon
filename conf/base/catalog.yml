@@ -14,6 +14,16 @@ text_for_image:
   type: pickle.PickleDataset
   filepath: data/02_intermediate/text_for_image.pkl
 
+quote_font:
+  type: datasets.font_dataset.FontDataset
+  filepath: data/01_raw/fonts/quote_font.ttf
+  fontsize: 60
+
+author_font:
+  type: datasets.font_dataset.FontDataset
+  filepath: data/01_raw/fonts/author_font.ttf
+  fontsize: 40
+
 final_image:
   type: pickle.PickleDataset
   filepath: data/02_intermediate/final_image.pkl

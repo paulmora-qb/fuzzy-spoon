@@ -8,13 +8,9 @@ canvas_settings:
 text_settings:
 
 final_image:
-  quote_font_location: ./data/01_raw/fonts/quote_font.ttf
-  author_font_location: ./data/01_raw/fonts/author_font.ttf
   margin_percentage: 0.1
   line_length_percentage: 0.8
   font_color: (0, 0, 0)
-  quote_font_size: 60
-  author_font_size: 40
 
 # Motivational Quote ###################################################################
 

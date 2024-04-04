@@ -74,29 +74,31 @@ def create_white_image(params: dict[str]) -> Image:
     return Image.fromarray(white_array, "RGB")
 
 
-def apply_text_on_image(image: Image, text: str, params: dict[str]) -> Image:
+def apply_text_on_image(
+    image: Image,
+    text: str,
+    quote_font: ImageFont.FreeTypeFont,
+    author_font: ImageFont.FreeTypeFont,
+    params: dict[str],
+) -> Image:
     """Function to apply the generated text on the white image canvas.
 
     For doing that, one needs to create the font, including style and size. Also
     the location of where the font is placed on the image needs to be decided.
 
     Args:
-        image (Image): The canvas that we produced earlier.
-        text (str): The quote that is to be printed on the image.
+        image (Image): Image on which the text needs to be placed.
+        text (str): Text that needs to be placed on the image.
+        quote_font (ImageFont.FreeTypeFont): Font for the quote.
+        author_font (ImageFont.FreeTypeFont): Font for the author.
+        params (dict[str]): Contains the information about font color and margin
 
     Returns:
-        Image: The inputted image with the text placed in the middle of the file.
+        Image: Image with the text placed on it.
     """
     font_color = ast.literal_eval(params["font_color"])
-    quote_font_file_path = params["quote_font_location"]
-    author_font_file_path = params["author_font_location"]
-    quote_font_size = params["quote_font_size"]
-    author_font_size = params["author_font_size"]
     margin_percentage = params["margin_percentage"]
-
     draw = ImageDraw.Draw(image)
-    quote_font = ImageFont.truetype(quote_font_file_path, quote_font_size)
-    author_font = ImageFont.truetype(author_font_file_path, author_font_size)
 
     # Calculate the maximum line length.
     max_line_length = _calculate_max_line_length(
