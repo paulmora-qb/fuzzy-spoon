@@ -10,12 +10,19 @@ from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 import importlib
+from common.llm.flow_modules.generate_query import Quote, Hashtag
+
+
+PYDANTIC_OUTPUT_PARSER = {
+    "quotes": Quote,
+    "hashtag": Hashtag,
+}
 
 
 def prompt_wrapper(
     system_message: str,
     instruction_message: str,
-    pydantic_object_path: str,
+    output_parser_key: str,
 ) -> str:
     """Building the prompt through instruction and system messages.
 
@@ -23,8 +30,8 @@ def prompt_wrapper(
         system_message (str): System message which states how the AI should behave.
         instruction_message (str): Instruction message which states what the AI should
             do.
-        pydantic_object_path (str): Path of where the pydantic object is stored. This
-            object states what attributes the output class should have.
+        output_parser_key (str): Name of the pipeline. Used to find the correct output
+            parser object.
 
     Returns:
         str: The output of the pipeline. This oftentimes is a class which has different
@@ -35,7 +42,9 @@ def prompt_wrapper(
         instruction_message=instruction_message, system_message=system_message
     )
     llm = _get_openai_endpoint()
-    output_parser = _build_output_parser(pydantic_object_path=pydantic_object_path)
+    output_parser = PydanticOutputParser(
+        pydantic_object=PYDANTIC_OUTPUT_PARSER[output_parser_key]
+    )
 
     chain = prompt | llm | output_parser
     return chain.invoke(
@@ -70,31 +79,6 @@ def _get_openai_endpoint(
         request_timeout=15,
         max_retries=2,
     )
-
-
-def _build_output_parser(pydantic_object_path: str):
-
-    pydantic_object = _load_obj(pydantic_object_path)
-    return PydanticOutputParser(pydantic_object=pydantic_object)
-
-
-def _load_obj(path: str) -> Any:
-    """Loading an object from a string path.
-
-    Args:
-        path (str): Path of the object.
-
-    Returns:
-        Any: The object that was loaded.
-    """
-    # Split the string into module name and class name
-    module_name, class_name = path.rsplit(".", 1)
-
-    # Import the module dynamically
-    module = importlib.import_module(module_name)
-
-    # Get the class from the module
-    return getattr(module, class_name)
 
 
 def _build_prompt(instruction_message: str, system_message: str) -> ChatPromptTemplate:

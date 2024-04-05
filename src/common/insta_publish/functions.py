@@ -3,36 +3,6 @@
 from PIL import Image
 from instagrapi import Client
 import os
-from libs.prompt_engineering.functions import prompt_wrapper
-
-
-def create_hashtags(
-    text_on_image: str,
-    system_message: str,
-    instruction_message: str,
-    pydantic_object_path: str,
-) -> list[str]:
-    """This function creates hashtags for an Instagram post.
-
-    Args:
-        text_on_image (str): The text that will be placed on the image.
-        system_message (str): System message which tells AI how to behave.
-        instruction_message (str): Instruction message which tells AI what to do.
-        pydantic_object_path (str): Path of where the pydantic object is stored. This
-            object states what attributes the output class should have.
-
-    Returns:
-        list[str]: The hashtags to be included in the Instagram post.
-    """
-    adjusted_instruction_message = instruction_message.format(
-        text=text_on_image, format_instructions="{format_instructions}"
-    )
-
-    return prompt_wrapper(
-        system_message=system_message,
-        instruction_message=adjusted_instruction_message,
-        pydantic_object_path=pydantic_object_path,
-    ).hashtag
 
 
 def post_image(image: Image, hashtags: list[str]) -> None:
