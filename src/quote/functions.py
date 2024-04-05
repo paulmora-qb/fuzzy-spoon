@@ -16,31 +16,25 @@ def create_text_dictionary(
     Returns:
         Dictionary with the text for the image.
     """
-    a = 1
-    # # Calculate the maximum line length.
-    # max_line_length = _calculate_max_line_length(
-    #     image_width=image.width,
-    #     margin_percentage=margin_percentage,
-    #     font=quote_font,
-    # )
+    # Separate texts.
+    quote_text = text_for_image.quote
+    author_text = text_for_image.author
 
-    # # Separate texts.
-    # quote_text = text.quote
-    # author_text = text.author
+    # Calculate the maximum line length.
+    max_line_length = _calculate_max_line_length(
+        image_width=image.width,
+        margin_percentage=margin_percentage,
+        font=quote_font,
+    )
 
-    # # Introduce line breaks in the quote text.
-    # adjusted_text = _introduce_line_breaks(
-    #     text=quote_text, max_line_length=max_line_length
-    # )
-    # adjusted_text += [" "]
+    # Introduce line breaks in the quote text.
+    adjusted_text = _introduce_line_breaks(
+        text=quote_text, max_line_length=max_line_length
+    )
+    adjusted_text += [" "]
 
-    # # Calculate the total height of the text.
-    # _, quote_text_height = _textsize(adjusted_text[0], font=quote_font)
-    # _, author_text_height = _textsize(author_text, font=author_font)
-    # total_text_height = (quote_text_height * len(adjusted_text)) + author_text_height
-
-    # text_font_dict = {i: quote_font for i in adjusted_text}
-    # text_font_dict[text.author] = author_font
+    text_font_dict = {i: quote_font for i in adjusted_text}
+    text_font_dict[text.author] = author_font
     return {"text": text_for_image}
 
 
@@ -60,22 +54,6 @@ def _calculate_max_line_length(
     usable_width = image_width * (1 - (margin_percentage * 2))
     sample_character_width, _ = _textsize("a", font=font)
     return usable_width // sample_character_width
-
-
-def _textsize(text: str, font: ImageFont.FreeTypeFont) -> tuple[int, int]:
-    """This function calculates the width and height of the text.
-
-    Args:
-        text (str): Text whose size needs to be calculated.
-        font (ImageFont.FreeTypeFont): Font used for the text.
-
-    Returns:
-        tuple[int, int]: Width and height of the text.
-    """
-    im = Image.new(mode="P", size=(0, 0))
-    draw = ImageDraw.Draw(im)
-    _, _, width, height = draw.textbbox((0, 0), text=text, font=font)
-    return width, height
 
 
 def _introduce_line_breaks(text: str, max_line_length: int) -> str:

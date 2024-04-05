@@ -14,7 +14,7 @@ from common.llm.flow_modules.generate_query import Quote, Hashtag
 
 
 PYDANTIC_OUTPUT_PARSER = {
-    "quotes": Quote,
+    "quote": Quote,
     "hashtag": Hashtag,
 }
 

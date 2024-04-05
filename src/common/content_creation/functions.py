@@ -1,7 +1,7 @@
 import ast
 
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 from common.llm.prompt_engineering.functions import prompt_wrapper
 import pandas as pd
 
@@ -96,6 +96,11 @@ def apply_text_on_image(
     margin_percentage = params["margin_percentage"]
     draw = ImageDraw.Draw(image)
 
+    # Calculate the total height of the text.
+    _, quote_text_height = _textsize(adjusted_text[0], font=quote_font)
+    _, author_text_height = _textsize(author_text, font=author_font)
+    total_text_height = (quote_text_height * len(adjusted_text)) + author_text_height
+
     # # Calculate the starting y-coordinate to center the text vertically.
     # y_start = (image.height - total_text_height) // 2
 
@@ -135,3 +140,19 @@ def create_hashtags(
         instruction_message=adjusted_instruction_message,
         output_parser_key=output_parser_key,
     ).hashtag
+
+
+def _textsize(text: str, font: ImageFont.FreeTypeFont) -> tuple[int, int]:
+    """This function calculates the width and height of the text.
+
+    Args:
+        text (str): Text whose size needs to be calculated.
+        font (ImageFont.FreeTypeFont): Font used for the text.
+
+    Returns:
+        tuple[int, int]: Width and height of the text.
+    """
+    im = Image.new(mode="P", size=(0, 0))
+    draw = ImageDraw.Draw(im)
+    _, _, width, height = draw.textbbox((0, 0), text=text, font=font)
+    return width, height

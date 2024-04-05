@@ -4,7 +4,7 @@ from kedro.pipeline import Pipeline, node, pipeline
 
 from common.content_creation import create_content_pipeline
 from common.insta_publish import create_insta_publish_pipeline
-from quotes.functions import create_text_dictionary
+from quote.functions import create_text_dictionary
 
 
 def create_text_dictionary_pipeline(
@@ -34,7 +34,7 @@ def create_pipeline(variants: list[str] = None) -> Pipeline:
     Returns:
         Pipeline: Pipeline for quotes with author information.
     """
-    namespace = "quotes"
+    namespace = "quote"
     return (
         create_text_dictionary_pipeline(
             namespace=namespace, inputs={"quote_font", "author_font"}

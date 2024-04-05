@@ -1,0 +1,24 @@
+# Image creation #######################################################################
+_default_canvas_settings:
+  image_width: 1080
+  image_length: 1080
+  background_color: 255
+
+_default_final_image:
+  margin_percentage: 0.1
+  line_length_percentage: 0.8
+  font_color: (0, 0, 0)
+
+# Hashtags #############################################################################
+_default_hashtag_instruction_message: "
+  Find around 10 hashtags relevant for the following text:
+
+  Text for hashtags: {text}
+  Format instructions: {format_instructions}
+"
+
+_default_hashtag_system_message: "
+  You are a helpful AI which looks for trending hashtags for a given input.
+  The main goal is to help the user find the best hashtags for their post. The
+  hashtags should help the post reach a wider audience.
+"

@@ -2,16 +2,6 @@
   type: pandas.ExcelDataset
   filepath: data/02_intermediate/past_generations.xlsx
 
-"quote_font":
-  type: datasets.font_dataset.FontDataset
-  filepath: data/01_raw/fonts/quote_font.ttf
-  fontsize: 60
-
-"author_font":
-  type: datasets.font_dataset.FontDataset
-  filepath: data/01_raw/fonts/{variant}/author_font.ttf
-  fontsize: 40
-
 "adjusted_past_texts":
   type: pandas.ExcelDataset
   filepath: data/02_intermediate/past_generations.xlsx

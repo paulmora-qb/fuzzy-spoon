@@ -1,7 +1,7 @@
 """Project pipelines."""
 
-from quotes import (
-    create_pipeline as create_quotes_pipeline,
+from quote import (
+    create_pipeline as create_quote_pipeline,
 )
 from kedro.pipeline import Pipeline
 
@@ -16,4 +16,4 @@ def register_pipelines() -> dict[str, Pipeline]:
     Returns:
         A mapping from pipeline names to ``Pipeline`` objects.
     """
-    return {"quote_pipeline": create_quotes_pipeline()}
+    return {"quote_pipeline": create_quote_pipeline()}

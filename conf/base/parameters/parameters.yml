@@ -1,0 +1,22 @@
+# Motivational Quote ###################################################################
+quote:
+  # Default settings
+  canvas_settings: ${_default_canvas_settings}
+  final_image: ${_default_final_image}
+  hashtag_instruction_message: ${_default_hashtag_instruction_message}
+  hashtag_system_message: ${_default_hashtag_system_message}
+
+  # Motivational Quote
+  instruction_message: "
+    Write a famous quote from a well-known person. This quote can be motivational,
+    inspirational, or thought-provoking. The quote should be less than 100 characters.
+    The main goal is to inspire and motivate the reader. Be careful not to generate a
+    quote that is already present in the list of texts that were already used.
+
+    Text Already Used: {past_texts}
+    Format instructions: {format_instructions}
+  "
+
+  system_message: "
+    You are a motivitional AI which provides famous and uplifting quotes.
+  "
