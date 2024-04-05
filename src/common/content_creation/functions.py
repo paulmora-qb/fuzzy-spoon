@@ -75,6 +75,7 @@ def create_white_image(params: dict[str]) -> Image:
 
 def apply_text_on_image(
     image: Image,
+    text_dictionary: dict[str, ImageFont.FreeTypeFont],
     params: dict[str],
 ) -> Image:
     """Function to apply the generated text on the white image canvas.
@@ -93,7 +94,6 @@ def apply_text_on_image(
         Image: Image with the text placed on it.
     """
     font_color = ast.literal_eval(params["font_color"])
-    margin_percentage = params["margin_percentage"]
     draw = ImageDraw.Draw(image)
 
     # Calculate the total height of the text.

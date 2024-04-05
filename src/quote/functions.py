@@ -22,8 +22,6 @@ def create_text_dictionary(
 
     # Calculate the maximum line length.
     max_line_length = _calculate_max_line_length(
-        image_width=image.width,
-        margin_percentage=margin_percentage,
         font=quote_font,
     )
 
@@ -34,12 +32,14 @@ def create_text_dictionary(
     adjusted_text += [" "]
 
     text_font_dict = {i: quote_font for i in adjusted_text}
-    text_font_dict[text.author] = author_font
-    return {"text": text_for_image}
+    text_font_dict[author_text] = author_font
+    return text_font_dict
 
 
 def _calculate_max_line_length(
-    image_width: int, margin_percentage: float, font: ImageFont.FreeTypeFont
+    font: ImageFont.FreeTypeFont,
+    image_width: int = 1080,
+    margin_percentage: float = 0.1,
 ) -> int:
     """This function calculates the maximum line length that can fit in the image.
 

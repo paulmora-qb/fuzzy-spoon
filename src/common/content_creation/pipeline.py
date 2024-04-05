@@ -51,6 +51,7 @@ def create_image_creation_pipeline(
             func=apply_text_on_image,
             inputs={
                 "image": "white_canvas",
+                "text_dictionary": "text_dictionary",
                 "params": "params:final_image",
             },
             outputs="final_image",
