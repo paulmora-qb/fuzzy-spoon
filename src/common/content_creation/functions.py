@@ -8,19 +8,28 @@ from common.utilities.text_tools import calc_total_text_width_height
 
 
 def save_pasts_text(
-    text: str,
+    namespace: str,
+    text_dictionary: str,
     past_texts: pd.DataFrame,
 ) -> pd.DataFrame:
     """Function to save the past texts.
 
     Args:
+        namespace (str): Namespace of the text.
         text (str): Text to be saved.
-        past_texts (pd.DataFrame): Dataframe containing author and text.
+        past_texts (pd.DataFrame): DataFrame containing author and text.
 
     Returns:
-        list[str]: DataFrame containing the old dataframe and the new appended.
+        pd.DataFrame: DataFrame containing the topic, text and timestamp of the post.
     """
-    data = pd.DataFrame({"text": {0: text.quote}, "author": {0: text.author}})
+    entire_text = "".join(text_dictionary.keys())
+    data = pd.DataFrame(
+        {
+            "topic": [namespace],
+            "text": [entire_text],
+            "timestamp": [pd.Timestamp.now()],
+        }
+    )
     return pd.concat([past_texts, data])
 
 
@@ -86,9 +95,8 @@ def apply_text_on_image(
 
     Args:
         image (Image): Image on which the text needs to be placed.
-        text (str): Text that needs to be placed on the image.
-        quote_font (ImageFont.FreeTypeFont): Font for the quote.
-        author_font (ImageFont.FreeTypeFont): Font for the author.
+        text_dictionary (dict[str, ImageFont.FreeTypeFont]): Dictionary containing the
+            text and font used for the text.
         params (dict[str]): Contains the information about font color and margin
 
     Returns:

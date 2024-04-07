@@ -1,4 +1,4 @@
-"""Pipeline for quotes with author information."""
+"""Pipeline for general content information."""
 
 from kedro.pipeline import Pipeline, node, pipeline
 
@@ -25,9 +25,9 @@ def create_text_object_pipeline(namespace: str = None, inputs: str = None) -> Pi
             name="create_text_for_image",
         ),
         node(
-            func=save_pasts_text,
+            func=partial(save_pasts_text, namespace=namespace),
             inputs={
-                "text": "text_for_image",
+                "text_dictionary": "text_dictionary",
                 "past_texts": "past_texts",
             },
             outputs="adjusted_past_texts",

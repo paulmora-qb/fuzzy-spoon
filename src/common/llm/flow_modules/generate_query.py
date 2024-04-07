@@ -12,3 +12,7 @@ class Quote(BaseModel):
 
 class Hashtag(BaseModel):
     hashtag: list[str] = Field(description="list of hashtags to be used in the post.")
+
+
+class Fact(BaseModel):
+    fact: str = Field(description="fact to be displayed.")

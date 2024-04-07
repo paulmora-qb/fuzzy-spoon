@@ -1,0 +1,23 @@
+# Motivational Quote ###################################################################
+fact:
+  # Default settings
+  canvas_settings: ${_default_canvas_settings}
+  final_image: ${_default_final_image}
+  hashtag_instruction_message: ${_default_hashtag_instruction_message}
+  hashtag_system_message: ${_default_hashtag_system_message}
+
+  # Motivational Quote
+  instruction_message: "
+    Write interesting and engaging facts. These facts should be around the topic
+    that is provided below. Make sure that the facts that you are stating are factually
+    correct. The fact should be less than 200 characters. Be careful not to generate a
+    fact that is already present in the list of texts that were already used.
+
+    Topic: Animals
+    Text Already Used: {past_texts}
+    Format instructions: {format_instructions}
+  "
+
+  system_message: "
+    You are an intelligent AI which provides interesting and engaging facts.
+  "

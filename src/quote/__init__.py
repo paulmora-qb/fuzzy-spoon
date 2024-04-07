@@ -1,3 +1,3 @@
 """Init for quotes module."""
 
-from .pipeline import create_pipeline
+from quote.pipeline import create_pipeline

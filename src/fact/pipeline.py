@@ -1,10 +1,10 @@
-"""Pipeline for quote image creation."""
+"""Pipelines for facts creation."""
 
 from kedro.pipeline import Pipeline, node, pipeline
 
 from common.content_creation import create_content_pipeline
 from common.insta_publish import create_insta_publish_pipeline
-from quote.functions import create_text_dictionary
+from fact.functions import create_text_dictionary
 
 
 def create_text_dictionary_pipeline(
@@ -15,8 +15,7 @@ def create_text_dictionary_pipeline(
             func=create_text_dictionary,
             inputs={
                 "text_for_image": "text_for_image",
-                "quote_font": "quote_font",
-                "author_font": "author_font",
+                "font": "quote_font",
             },
             outputs="text_dictionary",
             name="create_text_dictionary",
@@ -36,9 +35,7 @@ def create_pipeline(namespace: str, variants: list[str] = None) -> Pipeline:
         Pipeline: Pipeline for quotes with author information.
     """
     return (
-        create_text_dictionary_pipeline(
-            namespace=namespace, inputs={"quote_font", "author_font"}
-        )
+        create_text_dictionary_pipeline(namespace=namespace, inputs={"quote_font"})
         + create_content_pipeline(namespace=namespace)
         + create_insta_publish_pipeline(namespace=namespace)
     )

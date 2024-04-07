@@ -1,6 +1,6 @@
 """Functions for quote creation pipeline."""
 
-from PIL import ImageFont, ImageDraw, Image
+from PIL import ImageFont
 from common.utilities.text_tools import calculate_max_line_length, introduce_line_breaks
 
 

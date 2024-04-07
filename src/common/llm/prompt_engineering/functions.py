@@ -10,13 +10,10 @@ from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 import importlib
-from common.llm.flow_modules.generate_query import Quote, Hashtag
+from common.llm.flow_modules.generate_query import Quote, Hashtag, Fact
 
 
-PYDANTIC_OUTPUT_PARSER = {
-    "quote": Quote,
-    "hashtag": Hashtag,
-}
+PYDANTIC_OUTPUT_PARSER = {"quote": Quote, "hashtag": Hashtag, "fact": Fact}
 
 
 def prompt_wrapper(
