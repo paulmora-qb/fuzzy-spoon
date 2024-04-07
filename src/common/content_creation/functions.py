@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from common.llm.prompt_engineering.functions import prompt_wrapper
 import pandas as pd
+from common.utilities.text_tools import calc_total_text_width_height
 
 
 def save_pasts_text(
@@ -97,19 +98,17 @@ def apply_text_on_image(
     draw = ImageDraw.Draw(image)
 
     # Calculate the total height of the text.
-    _, quote_text_height = _textsize(adjusted_text[0], font=quote_font)
-    _, author_text_height = _textsize(author_text, font=author_font)
-    total_text_height = (quote_text_height * len(adjusted_text)) + author_text_height
+    _, total_height = calc_total_text_width_height(text_dictionary=text_dictionary)
 
     # # Calculate the starting y-coordinate to center the text vertically.
-    # y_start = (image.height - total_text_height) // 2
+    y_start = (image.height - total_height) // 2
 
     # # Draw each line of text.
-    # for text, font in text_font_dict.items():
-    #     _, _, text_width, text_height = draw.textbbox((0, 0), text=text, font=font)
-    #     x = (image.width - text_width) // 2
-    #     draw.text((x, y_start), text, font=font, fill=font_color)
-    #     y_start += text_height  # Move down for the next line
+    for text, font in text_dictionary.items():
+        _, _, text_width, text_height = draw.textbbox((0, 0), text=text, font=font)
+        x = (image.width - text_width) // 2
+        draw.text((x, y_start), text, font=font, fill=font_color)
+        y_start += text_height  # Move down for the next line
 
     return image
 
@@ -140,19 +139,3 @@ def create_hashtags(
         instruction_message=adjusted_instruction_message,
         output_parser_key=output_parser_key,
     ).hashtag
-
-
-def _textsize(text: str, font: ImageFont.FreeTypeFont) -> tuple[int, int]:
-    """This function calculates the width and height of the text.
-
-    Args:
-        text (str): Text whose size needs to be calculated.
-        font (ImageFont.FreeTypeFont): Font used for the text.
-
-    Returns:
-        tuple[int, int]: Width and height of the text.
-    """
-    im = Image.new(mode="P", size=(0, 0))
-    draw = ImageDraw.Draw(im)
-    _, _, width, height = draw.textbbox((0, 0), text=text, font=font)
-    return width, height
