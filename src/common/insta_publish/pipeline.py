@@ -3,12 +3,13 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
 from common.insta_publish.functions import post_image
+from functools import partial
 
 
 def create_insta_publish_pipeline(namespace: str = None) -> Pipeline:
     nodes = [
         node(
-            func=post_image,
+            func=partial(post_image, namespace=namespace),
             inputs={"image": "final_image", "hashtags": "hashtags"},
             outputs=None,
             name="post_image",

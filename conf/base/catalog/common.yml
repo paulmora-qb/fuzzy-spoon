@@ -6,6 +6,11 @@
   type: pandas.ExcelDataset
   filepath: data/01_raw/past_generations.xlsx
 
+"font":
+  type: datasets.font_dataset.FontDataset
+  filepath: data/01_raw/fonts/font.ttf
+  fontsize: 60
+
 "{variant}.white_canvas":
   type: pickle.PickleDataset
   filepath: data/02_intermediate/{variant}/white_canvas.pkl

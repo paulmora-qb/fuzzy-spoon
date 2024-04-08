@@ -3,9 +3,10 @@
 from PIL import Image
 from instagrapi import Client
 import os
+from kedro.config import OmegaConfigLoader
 
 
-def post_image(image: Image, hashtags: list[str]) -> None:
+def post_image(namespace: str, image: Image, hashtags: list[str]) -> None:
     """This function posts an image to Instagram.
 
     This function posts an image to instagram using the instagrapi library. Before
@@ -13,12 +14,17 @@ def post_image(image: Image, hashtags: list[str]) -> None:
     provided username and password. The image is then uploaded to the account.
 
     Args:
+        namespace (str): The namespace for the pipeline.
         image (Image): The image to be posted.
         hashtags (list[str]): The hashtags to be included in the Instagram post.
     """
+    top_level_namespace, variant = namespace.split(".")
+    conf_loader = OmegaConfigLoader(conf_source="./conf")
+    insta_params = conf_loader["credentials"][top_level_namespace][variant]
+
     # Extract the Instagram credentials.
-    username = os.environ.get("INSTA_USERNAME")
-    password = os.environ.get("INSTA_PASSWORD")
+    username = insta_params["username"]
+    password = insta_params["password"]
 
     # Login to the Instagram account.
     cl = Client()

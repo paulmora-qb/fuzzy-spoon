@@ -9,14 +9,50 @@ _default_final_image:
 
 # Hashtags #############################################################################
 _default_hashtag_instruction_message: "
-  Find around 10 hashtags relevant for the following text:
+  Create a list of 10 hashtags for the following topic.
 
-  Text for hashtags: {text}
+  Topic: {topic}
   Format instructions: {format_instructions}
 "
 
 _default_hashtag_system_message: "
   You are a helpful AI which looks for trending hashtags for a given input.
-  The main goal is to help the user find the best hashtags for their post. The
-  hashtags should help the post reach a wider audience.
 "
+# Quote Message ########################################################################
+_default_quote_instruction_message: "
+  Write a famous quote from a well-known person.
+  
+  - This quote can be motivational, inspirational, or thought-provoking.
+  - The quote should be less than 100 characters.
+  - The main goal is to inspire and motivate the reader.
+  - Be careful not to generate a quote that is already present in the list of texts
+    that were already used.
+
+  Topic: {topic}
+  Text Already Used: {past_texts}
+  Format instructions: {format_instructions}
+  "
+
+_default_quote_system_message: "
+  You are a instagram famous AI which provides great quotes which fit the mood.
+  "
+
+# Fact Message #########################################################################
+_default_fact_instruction_message: "
+  Write interesting and engaging facts.
+  
+  - These facts should be around the topic that is provided below. 
+  - Make sure that the facts that you are stating are factually correct.
+  - The fact should be less than 200 characters.
+  - Be careful not to generate a fact that is already present in the list of texts
+    that were already used.
+
+  Topic: {topic}
+  Text Already Used: {past_texts}
+  Format instructions: {format_instructions}
+  "
+
+_default_fact_system_message: "
+  You are an intelligent AI which provides interesting and engaging facts.
+"
+

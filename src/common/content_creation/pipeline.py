@@ -8,6 +8,7 @@ from common.content_creation.functions import (
     create_text_for_image,
     save_pasts_text,
     create_hashtags,
+    create_text_dictionary,
 )
 from functools import partial
 
@@ -23,6 +24,15 @@ def create_text_object_pipeline(namespace: str = None, inputs: str = None) -> Pi
             },
             outputs="text_for_image",
             name="create_text_for_image",
+        ),
+        node(
+            func=create_text_dictionary,
+            inputs={
+                "text_for_image": "text_for_image",
+                "font": "font",
+            },
+            outputs="text_dictionary",
+            name="create_text_dictionary",
         ),
         node(
             func=partial(save_pasts_text, namespace=namespace),
@@ -66,7 +76,7 @@ def create_hashtags_pipeline(inputs: str = None, namespace: str = None) -> Pipel
         node(
             func=partial(create_hashtags, output_parser_key="hashtag"),
             inputs={
-                "text_on_image": "text_for_image",
+                "text_dictionary": "text_dictionary",
                 "system_message": "params:hashtag_system_message",
                 "instruction_message": "params:hashtag_instruction_message",
             },
@@ -79,7 +89,7 @@ def create_hashtags_pipeline(inputs: str = None, namespace: str = None) -> Pipel
 
 def create_content_pipeline(inputs: str = None, namespace: str = None) -> Pipeline:
     return (
-        create_text_object_pipeline(namespace=namespace, inputs={"past_texts"})
+        create_text_object_pipeline(namespace=namespace, inputs={"past_texts", "font"})
         + create_image_creation_pipeline(namespace=namespace)
         + create_hashtags_pipeline(namespace=namespace)
     )

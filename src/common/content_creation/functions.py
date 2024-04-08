@@ -4,7 +4,12 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from common.llm.prompt_engineering.functions import prompt_wrapper
 import pandas as pd
-from common.utilities.text_tools import calc_total_text_width_height
+from common.utilities.text_tools import (
+    calc_total_text_width_height,
+    calculate_max_line_length,
+    introduce_line_breaks,
+)
+from common.utilities.text_tools.text_tools import _adjust_output_parser_key
 
 
 def save_pasts_text(
@@ -46,20 +51,23 @@ def create_text_for_image(
         instruction_message (str): Instruction message which states what the AI should
             do.
         output_parser_key (str): Key to the right output parser for the llm.
-        past_texts (pd.DataFrame): Dataframe containing author and text.
+        past_texts (pd.DataFrame): DataFrame containing author and text.
 
     Returns:
         str: The output of the pipeline. This oftentimes is a class which has different
             attributes.
     """
     list_of_past_texts = past_texts.loc[:, "text"].tolist()
+    parser_key, topic = _adjust_output_parser_key(output_parser_key=output_parser_key)
     adjusted_instruction_message = instruction_message.format(
-        past_texts=str(list_of_past_texts), format_instructions="{format_instructions}"
+        past_texts=str(list_of_past_texts),
+        topic=topic,
+        format_instructions="{format_instructions}",
     )
     return prompt_wrapper(
         system_message=system_message,
         instruction_message=adjusted_instruction_message,
-        output_parser_key=output_parser_key,
+        output_parser_key=parser_key,
     )
 
 
@@ -122,7 +130,7 @@ def apply_text_on_image(
 
 
 def create_hashtags(
-    text_on_image: str,
+    text_dictionary: dict[str, ImageFont.FreeTypeFont],
     system_message: str,
     instruction_message: str,
     output_parser_key: str,
@@ -130,7 +138,8 @@ def create_hashtags(
     """This function creates hashtags for an Instagram post.
 
     Args:
-        text_on_image (str): The text that will be placed on the image.
+        text_dictionary (dict[str, ImageFont.FreeTypeFont]): The text that will be
+            placed on the image.
         system_message (str): System message which tells AI how to behave.
         instruction_message (str): Instruction message which tells AI what to do.
         output_parser_key (str): The key to the output parser.
@@ -138,8 +147,9 @@ def create_hashtags(
     Returns:
         list[str]: The hashtags to be included in the Instagram post.
     """
+    text_on_image = "".join(text_dictionary.keys())
     adjusted_instruction_message = instruction_message.format(
-        text=text_on_image, format_instructions="{format_instructions}"
+        topic="love", format_instructions="{format_instructions}"
     )
 
     return prompt_wrapper(
@@ -147,3 +157,29 @@ def create_hashtags(
         instruction_message=adjusted_instruction_message,
         output_parser_key=output_parser_key,
     ).hashtag
+
+
+def create_text_dictionary(
+    text_for_image: str,
+    font: ImageFont.FreeTypeFont,
+) -> dict[str, str]:
+    """Create a dictionary from the text for the image.
+
+    Args:
+        text_for_image: Text for the image.
+
+    Returns:
+        Dictionary with the text for the image.
+    """
+    text = text_for_image.text
+
+    # Calculate the maximum line length.
+    max_line_length = calculate_max_line_length(
+        font=font,
+    )
+
+    # Introduce line breaks in the quote text.
+    adjusted_text = introduce_line_breaks(text=text, max_line_length=max_line_length)
+    adjusted_text += [" "]
+
+    return {i: font for i in adjusted_text}

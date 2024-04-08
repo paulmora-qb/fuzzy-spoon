@@ -4,10 +4,7 @@ from langchain_core.pydantic_v1 import BaseModel, Field
 
 
 class Quote(BaseModel):
-    quote: str = Field(description="quote to be displayed.")
-    author: str = Field(
-        description="first name and surname of the person who said the quote."
-    )
+    text: str = Field(description="quote to be displayed.")
 
 
 class Hashtag(BaseModel):
@@ -15,4 +12,4 @@ class Hashtag(BaseModel):
 
 
 class Fact(BaseModel):
-    fact: str = Field(description="fact to be displayed.")
+    text: str = Field(description="fact to be displayed.")

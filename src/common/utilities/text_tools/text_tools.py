@@ -80,3 +80,15 @@ def _calc_text_width_height(text: str, font: ImageFont.FreeTypeFont) -> tuple[in
     draw = ImageDraw.Draw(im)
     _, _, width, height = draw.textbbox((0, 0), text=text, font=font)
     return width, height
+
+
+def _adjust_output_parser_key(output_parser_key: str) -> str:
+    """Adjusting the output parser key.
+
+    Args:
+        output_parser_key (str): Name of the output parser key.
+
+    Returns:
+        str: Adjusted output parser key.
+    """
+    return output_parser_key.split(".")

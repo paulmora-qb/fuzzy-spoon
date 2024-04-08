@@ -1,9 +1,0 @@
-"quote_font":
-  type: datasets.font_dataset.FontDataset
-  filepath: data/01_raw/fonts/quote/quote_font.ttf
-  fontsize: 60
-
-"author_font":
-  type: datasets.font_dataset.FontDataset
-  filepath: data/01_raw/fonts/quote/author_font.ttf
-  fontsize: 40
