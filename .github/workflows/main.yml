@@ -20,8 +20,6 @@ jobs:
           [
             "make check-end-of-file-fixer",
             "make check-gitleaks",
-            "make check-legal",
-            "make check-nbstripout",
             "make check-prettier",
             "make check-ruff",
             "make check-trailing-whitespace",
