@@ -1,3 +1,5 @@
+"""Functions for content creation."""
+
 import ast
 
 import numpy as np
@@ -14,18 +16,21 @@ from PIL import Image, ImageDraw, ImageFont
 
 def save_pasts_text(
     namespace: str,
-    text_dictionary: str,
+    text_dictionary: dict[str, str],
     past_texts: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Function to save the past texts.
+    """Save the past texts.
 
     Args:
+    ----
         namespace (str): Namespace of the text.
-        text (str): Text to be saved.
+        text_dictionary (dict[str, str]): Dictionary containing the text.,
         past_texts (pd.DataFrame): DataFrame containing author and text.
 
     Returns:
+    -------
         pd.DataFrame: DataFrame containing the topic, text and timestamp of the post.
+
     """
     entire_text = "".join(text_dictionary.keys())
     data = pd.DataFrame(
@@ -44,9 +49,10 @@ def create_text_for_image(
     output_parser_key: str,
     past_texts: pd.DataFrame,
 ) -> str:
-    """Function to create the text that will be placed on the image.
+    """Create the text that will be placed on the image.
 
     Args:
+    ----
         system_message (str): System message which states how the AI should behave.
         instruction_message (str): Instruction message which states what the AI should
             do.
@@ -54,8 +60,10 @@ def create_text_for_image(
         past_texts (pd.DataFrame): DataFrame containing author and text.
 
     Returns:
+    -------
         str: The output of the pipeline. This oftentimes is a class which has different
             attributes.
+
     """
     list_of_past_texts = past_texts.loc[:, "text"].tolist()
     parser_key, topic = _adjust_output_parser_key(output_parser_key=output_parser_key)
@@ -72,14 +80,17 @@ def create_text_for_image(
 
 
 def create_white_image(params: dict[str]) -> Image:
-    """Function to create a white canvas.
+    """Create a white canvas.
 
     Args:
+    ----
         params (dict[str]): Contains the information about background color, image
             length and width.
 
     Returns:
+    -------
         Image: Background image.
+
     """
     image_width = params["image_width"]
     image_length = params["image_length"]
@@ -96,19 +107,22 @@ def apply_text_on_image(
     text_dictionary: dict[str, ImageFont.FreeTypeFont],
     params: dict[str],
 ) -> Image:
-    """Function to apply the generated text on the white image canvas.
+    """Apply the generated text on the white image canvas.
 
     For doing that, one needs to create the font, including style and size. Also
     the location of where the font is placed on the image needs to be decided.
 
     Args:
+    ----
         image (Image): Image on which the text needs to be placed.
         text_dictionary (dict[str, ImageFont.FreeTypeFont]): Dictionary containing the
             text and font used for the text.
         params (dict[str]): Contains the information about font color and margin
 
     Returns:
+    -------
         Image: Image with the text placed on it.
+
     """
     font_color = ast.literal_eval(params["font_color"])
     draw = ImageDraw.Draw(image)
@@ -134,15 +148,18 @@ def create_hashtags(
     instruction_message: str,
     output_parser_key: str,
 ) -> list[str]:
-    """This function creates hashtags for an Instagram post.
+    """Create hashtags for an Instagram post.
 
     Args:
+    ----
         system_message (str): System message which tells AI how to behave.
         instruction_message (str): Instruction message which tells AI what to do.
         output_parser_key (str): The key to the output parser.
 
     Returns:
+    -------
         list[str]: The hashtags to be included in the Instagram post.
+
     """
     adjusted_instruction_message = instruction_message.format(
         topic="love", format_instructions="{format_instructions}"
@@ -162,10 +179,14 @@ def create_text_dictionary(
     """Create a dictionary from the text for the image.
 
     Args:
+    ----
         text_for_image: Text for the image.
+        font: Font used for the text.
 
     Returns:
+    -------
         Dictionary with the text for the image.
+
     """
     text = text_for_image.text
 
