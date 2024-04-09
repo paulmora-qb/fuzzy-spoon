@@ -1,32 +1,22 @@
 name: Main workflow
 
-on:
-  push:
-    branches:
-      - "**"
+on: [push]
 
 jobs:
-  ##################################################################################################
-  ############### CHECKS ###########################################################################
-  ##################################################################################################
-
-  run_checks:
-    name: Code Quality Checks
+  run-make:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        command:
-          [
-            "make check-end-of-file-fixer",
-            "make check-gitleaks",
-            "make check-prettier",
-            "make check-ruff",
-            "make check-trailing-whitespace",
-          ]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.ref }}
+      - uses: actions/checkout@v3
+        # This step checks out a copy of your repository.
+
+      - name: Setup environment
+        run: sudo apt-get update && sudo apt-get install -y make
+        # This step ensures the `make` utility is installed on the runner.
+
+      - name: Execute Makefile commands
+        run: |
+          make check-end-of-file-fixer
+          make check-gitleaks
+          make check-prettier
+          make check-ruff
+          make check-trailing-whitespace
