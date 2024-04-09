@@ -3,8 +3,8 @@
 from typing import Any, Dict
 
 import numpy as np
-from PIL import ImageFont
 from kedro.io import AbstractDataset
+from PIL import ImageFont
 
 
 class FontDataset(AbstractDataset[np.ndarray, np.ndarray]):

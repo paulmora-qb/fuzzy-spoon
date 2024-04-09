@@ -1,9 +1,8 @@
 """Project pipelines."""
 
-from quote import create_pipeline as create_quote_pipeline
 from fact import create_pipeline as create_fact_pipeline
-
 from kedro.pipeline import Pipeline
+from quote import create_pipeline as create_quote_pipeline
 
 DYNAMIC_PIPELINES_MAPPING = {
     "quote": ["inspirational", "breakup", "love", "life"],

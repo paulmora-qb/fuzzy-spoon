@@ -1,9 +1,10 @@
 """Functions for the insta_publish pipeline."""
 
-from PIL import Image
-from instagrapi import Client
 import os
+
+from instagrapi import Client
 from kedro.config import OmegaConfigLoader
+from PIL import Image
 
 
 def post_image(namespace: str, image: Image, hashtags: list[str]) -> None:
@@ -35,9 +36,8 @@ def post_image(namespace: str, image: Image, hashtags: list[str]) -> None:
     if os.path.exists(temp_image_path):
         try:
             os.remove(temp_image_path)
-            print(f"The file at '{temp_image_path}' has been successfully deleted.")
         except Exception as e:
-            print(f"Error deleting the file: {e}")
+            raise ValueError(f"Error deleting the file: {e}")
 
     # Save the image to a temporary file and upload it to Instagram.
     image.save(temp_image_path)

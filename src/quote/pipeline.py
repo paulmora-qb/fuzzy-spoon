@@ -1,9 +1,8 @@
 """Pipeline for quote image creation."""
 
-from kedro.pipeline import Pipeline
-
 from common.content_creation import create_content_pipeline
 from common.insta_publish import create_insta_publish_pipeline
+from kedro.pipeline import Pipeline
 
 
 def create_pipeline(namespace: str, variants: list[str] = None) -> Pipeline:

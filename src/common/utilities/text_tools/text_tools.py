@@ -1,6 +1,6 @@
 """Text tools functions."""
 
-from PIL import ImageFont, ImageDraw, Image
+from PIL import Image, ImageDraw, ImageFont
 
 
 def calculate_max_line_length(
@@ -47,7 +47,7 @@ def introduce_line_breaks(text: str, max_line_length: int) -> str:
 
 
 def calc_total_text_width_height(
-    text_dictionary: dict[str, ImageFont.FreeTypeFont]
+    text_dictionary: dict[str, ImageFont.FreeTypeFont],
 ) -> tuple[int, int]:
     """This function calculates the total width and height of the text.
 

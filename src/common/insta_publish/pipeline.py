@@ -1,9 +1,9 @@
 """Kedro pipelines for the insta_publish package."""
 
-from kedro.pipeline import Pipeline, node, pipeline
+from functools import partial
 
 from common.insta_publish.functions import post_image
-from functools import partial
+from kedro.pipeline import Pipeline, node, pipeline
 
 
 def create_insta_publish_pipeline(namespace: str = None) -> Pipeline:

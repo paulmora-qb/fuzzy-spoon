@@ -1,16 +1,16 @@
 """Pipeline for general content information."""
 
-from kedro.pipeline import Pipeline, node, pipeline
+from functools import partial
 
 from common.content_creation.functions import (
     apply_text_on_image,
-    create_white_image,
-    create_text_for_image,
-    save_pasts_text,
     create_hashtags,
     create_text_dictionary,
+    create_text_for_image,
+    create_white_image,
+    save_pasts_text,
 )
-from functools import partial
+from kedro.pipeline import Pipeline, node, pipeline
 
 
 def create_text_object_pipeline(namespace: str = None, inputs: str = None) -> Pipeline:
