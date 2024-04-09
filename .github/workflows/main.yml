@@ -1,19 +1,32 @@
 name: Main workflow
 
-on: [push]
+# Triggers the workflow on push or pull request events
+on: [push, pull_request]
 
 jobs:
-  run-make:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-        # This step checks out a copy of your repository.
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        # Checks out your repository under $GITHUB_WORKSPACE, so your workflow can access it
 
-      - name: Setup environment
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+        # Set up a specific Python version for pre-commit and other Python tools
+
+      - name: Install Pre-commit
+        run: pip install pre-commit
+        # Installs pre-commit to the GitHub Actions environment
+
+      - name: Install Make
         run: sudo apt-get update && sudo apt-get install -y make
-        # This step ensures the `make` utility is installed on the runner.
+        # Ensures the make utility is installed on the GitHub Actions runner
 
-      - name: Execute Makefile commands
+      - name: Run Makefile Commands
         run: |
           make check-end-of-file-fixer
           make check-gitleaks
