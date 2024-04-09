@@ -76,7 +76,6 @@ def create_hashtags_pipeline(inputs: str = None, namespace: str = None) -> Pipel
         node(
             func=partial(create_hashtags, output_parser_key="hashtag"),
             inputs={
-                "text_dictionary": "text_dictionary",
                 "system_message": "params:hashtag_system_message",
                 "instruction_message": "params:hashtag_instruction_message",
             },

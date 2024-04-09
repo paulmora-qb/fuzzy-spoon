@@ -1,5 +1,7 @@
 """Functions for the llm callback pipeline."""
 
+import os
+
 from common.llm.flow_modules.generate_query import Fact, Hashtag, Quote
 from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import ChatPromptTemplate
@@ -7,7 +9,7 @@ from langchain.prompts.chat import (
     HumanMessagePromptTemplate,
     SystemMessagePromptTemplate,
 )
-import os
+from langchain_openai import ChatOpenAI
 
 PYDANTIC_OUTPUT_PARSER = {
     "quote": Quote,
@@ -48,9 +50,6 @@ def prompt_wrapper(
     return chain.invoke(
         {"format_instructions": output_parser.get_format_instructions()}
     )
-
-
-from langchain_openai import ChatOpenAI
 
 
 def _get_openai_endpoint(

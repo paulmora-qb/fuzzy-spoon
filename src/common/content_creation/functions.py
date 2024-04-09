@@ -130,7 +130,6 @@ def apply_text_on_image(
 
 
 def create_hashtags(
-    text_dictionary: dict[str, ImageFont.FreeTypeFont],
     system_message: str,
     instruction_message: str,
     output_parser_key: str,
@@ -138,8 +137,6 @@ def create_hashtags(
     """This function creates hashtags for an Instagram post.
 
     Args:
-        text_dictionary (dict[str, ImageFont.FreeTypeFont]): The text that will be
-            placed on the image.
         system_message (str): System message which tells AI how to behave.
         instruction_message (str): Instruction message which tells AI what to do.
         output_parser_key (str): The key to the output parser.
@@ -147,7 +144,6 @@ def create_hashtags(
     Returns:
         list[str]: The hashtags to be included in the Instagram post.
     """
-    text_on_image = "".join(text_dictionary.keys())
     adjusted_instruction_message = instruction_message.format(
         topic="love", format_instructions="{format_instructions}"
     )
