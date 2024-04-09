@@ -1,18 +1,16 @@
 default_language_version:
-  python: python3.9
+  python: python3.10
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
       - id: end-of-file-fixer
-        language_version: python3.9
         name: end-of-file-fixer
         description: Ensure a newline at the end of the file
         stages: [commit]
 
       - id: trailing-whitespace
-        language_version: python3.9
         name: trailing-whitespace
         description: Remove trailing whitespaces
         stages: [commit]
@@ -21,13 +19,11 @@ repos:
     rev: "v0.2.2"
     hooks:
       - id: ruff
-        language_version: python3.9
         name: ruff
         types: [python]
         args: [--fix, --config, pyproject.toml]
 
       - id: ruff-format
-        language_version: python3.9
         name: ruff-format
         types: [python]
         args: [--config, pyproject.toml]
@@ -36,12 +32,10 @@ repos:
     rev: "v4.0.0-alpha.8"
     hooks:
       - id: prettier
-        language_version: python3.9
         stages: [commit]
 
   - repo: https://github.com/zricethezav/gitleaks
     rev: "v8.18.1"
     hooks:
       - id: gitleaks
-        language_version: python3.9
         name: "gitleaks"
