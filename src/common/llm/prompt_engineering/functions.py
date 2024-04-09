@@ -41,7 +41,7 @@ def prompt_wrapper(
     )
 
     llm = _get_openai_endpoint()
-    # llm = GPT4All(model="libs/nous-hermes-llama2-13b.Q4_0.gguf")
+    llm = GPT4All(model="libs/nous-hermes-llama2-13b.Q4_0.gguf")
     output_parser = PydanticOutputParser(
         pydantic_object=PYDANTIC_OUTPUT_PARSER[output_parser_key]
     )
