@@ -5,19 +5,26 @@ import os
 from instagrapi import Client
 from kedro.config import OmegaConfigLoader
 from PIL import Image
+from instagrapi import Client
+from instagrapi.exceptions import LoginRequired
+import logging
+
+logger = logging.getLogger()
 
 
 def post_image(namespace: str, image: Image, hashtags: list[str]) -> None:
-    """This function posts an image to Instagram.
+    """Post an image to Instagram.
 
     This function posts an image to instagram using the instagrapi library. Before
     posting the image, the function logs into the Instagram account using the
     provided username and password. The image is then uploaded to the account.
 
     Args:
+    ----
         namespace (str): The namespace for the pipeline.
         image (Image): The image to be posted.
         hashtags (list[str]): The hashtags to be included in the Instagram post.
+
     """
     top_level_namespace, variant = namespace.split(".")
     conf_loader = OmegaConfigLoader(conf_source="./conf")
@@ -37,7 +44,7 @@ def post_image(namespace: str, image: Image, hashtags: list[str]) -> None:
         try:
             os.remove(temp_image_path)
         except Exception as e:
-            raise ValueError(f"Error deleting the file: {e}")
+            raise NewException("An error occurred") from err
 
     # Save the image to a temporary file and upload it to Instagram.
     image.save(temp_image_path)

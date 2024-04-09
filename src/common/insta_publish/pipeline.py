@@ -7,6 +7,7 @@ from kedro.pipeline import Pipeline, node, pipeline
 
 
 def create_insta_publish_pipeline(namespace: str = None) -> Pipeline:
+    """Create a pipeline for publishing images to Instagram."""
     nodes = [
         node(
             func=partial(post_image, namespace=namespace),

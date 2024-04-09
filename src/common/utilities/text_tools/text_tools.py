@@ -8,15 +8,18 @@ def calculate_max_line_length(
     image_width: int = 1080,
     margin_percentage: float = 0.1,
 ) -> int:
-    """This function calculates the maximum line length that can fit in the image.
+    """Calculate the maximum line length that can fit in the image.
 
     Args:
+    ----
         image_width (int): Width of the image.
         margin_percentage (float): Percentage of the margin.
         font (ImageFont.FreeTypeFont): Font used for the text.
 
     Returns:
+    -------
         int: Maximum line length.
+
     """
     usable_width = image_width * (1 - (margin_percentage * 2))
     sample_character_width, _ = _calc_text_width_height("a", font=font)
@@ -24,14 +27,17 @@ def calculate_max_line_length(
 
 
 def introduce_line_breaks(text: str, max_line_length: int) -> str:
-    """This function breaks the text to fit it within the maximum line length.
+    """Break the text to fit it within the maximum line length.
 
     Args:
+    ----
         text (str): Text that needs to be broken into lines.
         max_line_length (int): Maximum length of each line.
 
     Returns:
+    -------
         str: Text with line breaks.
+
     """
     words = text.split(" ")
     lines = []
@@ -49,14 +55,17 @@ def introduce_line_breaks(text: str, max_line_length: int) -> str:
 def calc_total_text_width_height(
     text_dictionary: dict[str, ImageFont.FreeTypeFont],
 ) -> tuple[int, int]:
-    """This function calculates the total width and height of the text.
+    """Calculate the total width and height of the text.
 
     Args:
+    ----
         text_dictionary (dict[str, ImageFont.FreeTypeFont]): Dictionary containing the
             text and font used for the text.
 
     Returns:
+    -------
         tuple[int, int]: Total width and height of the text.
+
     """
     width_height_tuple = [
         _calc_text_width_height(text, font) for text, font in text_dictionary.items()
@@ -67,14 +76,17 @@ def calc_total_text_width_height(
 
 
 def _calc_text_width_height(text: str, font: ImageFont.FreeTypeFont) -> tuple[int, int]:
-    """This function calculates the width and height of the text.
+    """Calculate the width and height of the text.
 
     Args:
+    ----
         text (str): Text whose size needs to be calculated.
         font (ImageFont.FreeTypeFont): Font used for the text.
 
     Returns:
+    -------
         tuple[int, int]: Width and height of the text.
+
     """
     im = Image.new(mode="P", size=(0, 0))
     draw = ImageDraw.Draw(im)
@@ -83,12 +95,15 @@ def _calc_text_width_height(text: str, font: ImageFont.FreeTypeFont) -> tuple[in
 
 
 def _adjust_output_parser_key(output_parser_key: str) -> str:
-    """Adjusting the output parser key.
+    """Adjust the output parser key.
 
     Args:
+    ----
         output_parser_key (str): Name of the output parser key.
 
     Returns:
+    -------
         str: Adjusted output parser key.
+
     """
     return output_parser_key.split(".")

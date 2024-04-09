@@ -9,11 +9,14 @@ def create_pipeline(namespace: str, variants: list[str] = None) -> Pipeline:
     """Pipeline for quotes with author information.
 
     Args:
+    ----
         namespace (str): Namespace for the pipeline.
         variants (list[str]): Variants of the pipeline.
 
     Returns:
+    -------
         Pipeline: Pipeline for quotes with author information.
+
     """
     namespaces = [f"{namespace}.{variant}" for variant in variants]
     return sum(

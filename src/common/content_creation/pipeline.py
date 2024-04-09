@@ -14,6 +14,18 @@ from kedro.pipeline import Pipeline, node, pipeline
 
 
 def create_text_object_pipeline(namespace: str = None, inputs: str = None) -> Pipeline:
+    """Pipeline for creating text objects.
+
+    Args:
+    ----
+        namespace (str, optional): Namespace for input/ output. Defaults to None.
+        inputs (str, optional): Input to use default. Defaults to None.
+
+    Returns:
+    -------
+        Pipeline: Pipeline for creating text objects.
+
+    """
     nodes = [
         node(
             func=partial(create_text_for_image, output_parser_key=namespace),
@@ -50,6 +62,18 @@ def create_text_object_pipeline(namespace: str = None, inputs: str = None) -> Pi
 def create_image_creation_pipeline(
     inputs: str = None, namespace: str = None
 ) -> Pipeline:
+    """Pipeline for creating images.
+
+    Args:
+    ----
+        namespace (str, optional): Namespace for input/ output. Defaults to None.
+        inputs (str, optional): Input to use default. Defaults to None.
+
+    Returns:
+    -------
+        Pipeline: Pipeline for creating images.
+
+    """
     nodes = [
         node(
             func=create_white_image,
@@ -72,6 +96,18 @@ def create_image_creation_pipeline(
 
 
 def create_hashtags_pipeline(inputs: str = None, namespace: str = None) -> Pipeline:
+    """Pipeline for creating hashtags.
+
+    Args:
+    ----
+        namespace (str, optional): Namespace for input/ output. Defaults to None.
+        inputs (str, optional): Input to use default. Defaults to None.
+
+    Returns:
+    -------
+        Pipeline: Pipeline for creating hashtags.
+
+    """
     nodes = [
         node(
             func=partial(create_hashtags, output_parser_key="hashtag"),
@@ -86,7 +122,18 @@ def create_hashtags_pipeline(inputs: str = None, namespace: str = None) -> Pipel
     return pipeline(pipe=Pipeline(nodes), namespace=namespace, inputs=inputs)
 
 
-def create_content_pipeline(inputs: str = None, namespace: str = None) -> Pipeline:
+def create_content_pipeline(namespace: str = None) -> Pipeline:
+    """Pipeline for creating content.
+
+    Args:
+    ----
+        namespace (str, optional): Namespace for input/ output. Defaults to None.
+
+    Returns:
+    -------
+        Pipeline: Pipeline for creating content.
+
+    """
     return (
         create_text_object_pipeline(namespace=namespace, inputs={"past_texts", "font"})
         + create_image_creation_pipeline(namespace=namespace)
