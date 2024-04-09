@@ -44,7 +44,7 @@ def post_image(namespace: str, image: Image, hashtags: list[str]) -> None:
         try:
             os.remove(temp_image_path)
         except Exception as e:
-            raise NewException("An error occurred") from err
+            raise ValueError("Error deleting the file") from e
 
     # Save the image to a temporary file and upload it to Instagram.
     image.save(temp_image_path)
