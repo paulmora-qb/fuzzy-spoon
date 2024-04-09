@@ -6,27 +6,11 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    container:
+      image: python:3.10
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        # Checks out your repository under $GITHUB_WORKSPACE, so your workflow can access it
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
-        # Set up a specific Python version for pre-commit and other Python tools
-
-      - name: Install Pre-commit
-        run: pip install pre-commit
-        # Installs pre-commit to the GitHub Actions environment
-
-      - name: Install Make
-        run: sudo apt-get update && sudo apt-get install -y make
-        # Ensures the make utility is installed on the GitHub Actions runner
-
-      - name: Run Makefile Commands
+      - uses: actions/checkout@v3
+      - name: Install dependencies and run pre-commit
         run: |
           make check-end-of-file-fixer
           make check-gitleaks
