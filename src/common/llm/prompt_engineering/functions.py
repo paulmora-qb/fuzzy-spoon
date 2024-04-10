@@ -62,18 +62,21 @@ def _retrying_after_failure(
     """Retry the chain after a failure.
 
     Args:
+    ----
         chain (RunnableSequence): Chain that invokes the LLM.
         inputs (dict[str, str]): The inputs to the prompt.
         max_attempts (int, optional): Number of attempts tried before accepting failure.
             Defaults to 10.
 
     Raises:
+    ------
         Exception: If all attempts fail.
 
     Returns:
+    -------
         object: The desired object that is returned by the chain.
-    """
 
+    """
     attempts = 0
 
     while attempts < max_attempts:
@@ -86,8 +89,7 @@ def _retrying_after_failure(
     # If the loop completes without breaking, it means all attempts failed
     if attempts == max_attempts:
         raise Exception("All attempts failed.")
-    else:
-        return desired_object
+    return desired_object
 
 
 def _get_openai_endpoint(
