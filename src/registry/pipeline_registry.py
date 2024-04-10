@@ -20,9 +20,11 @@ def register_pipelines() -> dict[str, Pipeline]:
     """
     return {
         "quote_pipeline": create_quote_pipeline(
-            namespace="quote", variants=DYNAMIC_PIPELINES_MAPPING["quote"]
+            namespace="quote",
+            variants=DYNAMIC_PIPELINES_MAPPING["quote"],
+            publish=False,
         ),
         "fact_pipeline": create_fact_pipeline(
-            namespace="fact", variants=DYNAMIC_PIPELINES_MAPPING["fact"]
+            namespace="fact", variants=DYNAMIC_PIPELINES_MAPPING["fact"], publish=False
         ),
     }

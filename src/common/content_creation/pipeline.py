@@ -30,8 +30,7 @@ def create_text_object_pipeline(namespace: str = None, inputs: str = None) -> Pi
         node(
             func=partial(create_text_for_image, output_parser_key=namespace),
             inputs={
-                "system_message": "params:system_message",
-                "instruction_message": "params:instruction_message",
+                "template": "params:template",
                 "past_texts": "past_texts",
             },
             outputs="text_for_image",
@@ -134,8 +133,6 @@ def create_content_pipeline(namespace: str = None) -> Pipeline:
         Pipeline: Pipeline for creating content.
 
     """
-    return (
-        create_text_object_pipeline(namespace=namespace, inputs={"past_texts", "font"})
-        + create_image_creation_pipeline(namespace=namespace)
-        + create_hashtags_pipeline(namespace=namespace)
-    )
+    return create_text_object_pipeline(
+        namespace=namespace, inputs={"past_texts", "font"}
+    ) + create_image_creation_pipeline(namespace=namespace)

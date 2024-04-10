@@ -20,5 +20,5 @@
   filepath: data/02_intermediate/{variant}/text_for_image.pkl
 
 "{variant}.final_image":
-  type: pickle.PickleDataset
-  filepath: data/02_intermediate/{variant}/final_image.pkl
+  type: datasets.image_dataset.ImageDataset
+  filepath: data/07_model_output/{variant}/final_image.png

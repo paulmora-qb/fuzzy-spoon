@@ -5,13 +5,16 @@ from common.insta_publish import create_insta_publish_pipeline
 from kedro.pipeline import Pipeline
 
 
-def create_pipeline(namespace: str, variants: list[str] = None) -> Pipeline:
+def create_pipeline(
+    namespace: str, variants: list[str] = None, publish: bool = True
+) -> Pipeline:
     """Pipeline for quotes with author information.
 
     Args:
     ----
         namespace (str): Namespace for the pipeline.
         variants (list[str]): Variants of the pipeline.
+        publish (bool): Whether to publish the image. Defaults to True.
 
     Returns:
     -------
@@ -19,10 +22,11 @@ def create_pipeline(namespace: str, variants: list[str] = None) -> Pipeline:
 
     """
     namespaces = [f"{namespace}.{variant}" for variant in variants]
+
     return sum(
         [
             create_content_pipeline(namespace=namespace)
-            + create_insta_publish_pipeline(namespace=namespace)
+            + create_insta_publish_pipeline(namespace=namespace, publish=publish)
             for namespace in namespaces
         ]
     )

@@ -8,35 +8,27 @@ _default_final_image:
   font_color: (0, 0, 0)
 
 # Hashtags #############################################################################
-_default_hashtag_instruction_message: "
+_default_hashtag_template: "
   Create a list of 10 hashtags for the following topic.
 
   Topic: {topic}
   Format instructions: {format_instructions}"
 
-_default_hashtag_system_message: " You are a helpful AI which looks for trending hashtags for a given input."
 # Quote Message ########################################################################
-_default_quote_instruction_message: "
-  Write a famous quote from a well-known person.
+_default_quote_template: "
+  Write a quote about: {topic}
 
-  - This quote can be motivational, inspirational, or thought-provoking.
   - The quote should be less than 100 characters.
-  - The main goal is to inspire and motivate the reader.
   - Be careful not to generate a quote that is already present in the list of texts
   that were already used.
 
-  Topic: {topic}
   Text Already Used: {past_texts}
   Format instructions: {format_instructions}
   "
 
-_default_quote_system_message: "
-  You are a instagram famous AI which provides great quotes which fit the mood.
-  "
-
 # Fact Message #########################################################################
-_default_fact_instruction_message: "
-  Write interesting and engaging facts.
+_default_fact_template: "
+  Write interesting and engaging facts about {topic}
 
   - These facts should be around the topic that is provided below.
   - Make sure that the facts that you are stating are factually correct.
@@ -44,10 +36,6 @@ _default_fact_instruction_message: "
   - Be careful not to generate a fact that is already present in the list of texts
   that were already used.
 
-  Topic: {topic}
   Text Already Used: {past_texts}
   Format instructions: {format_instructions}
   "
-
-_default_fact_system_message: "
-  You are an intelligent AI which provides interesting and engaging facts."

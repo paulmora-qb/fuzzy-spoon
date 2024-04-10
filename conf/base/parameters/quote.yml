@@ -3,34 +3,26 @@ quote:
   inspirational:
     canvas_settings: ${_default_canvas_settings}
     final_image: ${_default_final_image}
-    hashtag_instruction_message: ${_default_hashtag_instruction_message}
-    hashtag_system_message: ${_default_hashtag_system_message}
-    instruction_message: ${_default_quote_instruction_message}
-    system_message: ${_default_quote_system_message}
+    hashtag_template: ${_default_hashtag_template}
+    template: ${_default_quote_template}
 
   # Breakup ############################################################################
   breakup:
     canvas_settings: ${_default_canvas_settings}
     final_image: ${_default_final_image}
-    hashtag_instruction_message: ${_default_hashtag_instruction_message}
-    hashtag_system_message: ${_default_hashtag_system_message}
-    instruction_message: ${_default_quote_instruction_message}
-    system_message: ${_default_quote_system_message}
+    hashtag_template: ${_default_hashtag_template}
+    template: ${_default_quote_template}
 
   # Love ###############################################################################
   love:
     canvas_settings: ${_default_canvas_settings}
     final_image: ${_default_final_image}
-    hashtag_instruction_message: ${_default_hashtag_instruction_message}
-    hashtag_system_message: ${_default_hashtag_system_message}
-    instruction_message: ${_default_quote_instruction_message}
-    system_message: ${_default_quote_system_message}
+    hashtag_template: ${_default_hashtag_template}
+    template: ${_default_quote_template}
 
   # Life ###############################################################################
   life:
     canvas_settings: ${_default_canvas_settings}
     final_image: ${_default_final_image}
-    hashtag_instruction_message: ${_default_hashtag_instruction_message}
-    hashtag_system_message: ${_default_hashtag_system_message}
-    instruction_message: ${_default_quote_instruction_message}
-    system_message: ${_default_quote_system_message}
+    hashtag_template: ${_default_hashtag_template}
+    template: ${_default_quote_template}

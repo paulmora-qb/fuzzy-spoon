@@ -44,8 +44,7 @@ def save_pasts_text(
 
 
 def create_text_for_image(
-    system_message: str,
-    instruction_message: str,
+    template: str,
     output_parser_key: str,
     past_texts: pd.DataFrame,
 ) -> str:
@@ -53,9 +52,7 @@ def create_text_for_image(
 
     Args:
     ----
-        system_message (str): System message which states how the AI should behave.
-        instruction_message (str): Instruction message which states what the AI should
-            do.
+        template (str): Template for the text.
         output_parser_key (str): Key to the right output parser for the llm.
         past_texts (pd.DataFrame): DataFrame containing author and text.
 
@@ -67,14 +64,9 @@ def create_text_for_image(
     """
     list_of_past_texts = past_texts.loc[:, "text"].tolist()
     parser_key, topic = _adjust_output_parser_key(output_parser_key=output_parser_key)
-    adjusted_instruction_message = instruction_message.format(
-        past_texts=str(list_of_past_texts),
-        topic=topic,
-        format_instructions="{format_instructions}",
-    )
     return prompt_wrapper(
-        system_message=system_message,
-        instruction_message=adjusted_instruction_message,
+        inputs={"topic": topic, "past_texts": list_of_past_texts},
+        template=template,
         output_parser_key=parser_key,
     )
 
